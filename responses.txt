@@ -1,0 +1,107 @@
+inatall.packages("rmarkdown")
+install.packages("rmarkdown")
+tinytex::install_tinytex()
+x <- 1:4
+y <- 2
+xy
+x y
+x*y
+x+y
+x <- c(3,5,1,10,12,6)
+y <- x<6
+y
+x[y] <- 0
+x
+con <- file(hw1_data.csv)
+con <- file("hw1_data.csv")
+data read.csv(con , 2)
+data <- read.csv(con , 2)
+data
+data <- readLines(con , 2)
+close(con =)
+close(con)
+con <- file("hw1_data.csv")
+x <- readLines(con , 2)
+x
+close(con)
+data
+nrows(data)
+nRow(data)
+nrow(data)
+con <- file("hw1_data.csv")
+x <- readLines(con , 153:154)
+x
+x <- readLines(con , 152:153)
+x
+x <- read.csv(con , skip=151)
+x
+x <- read.csv(con , skip=151, header = 1)
+close(con)
+con <- file("hw1_data.csv")
+x <- read.csv(con , skip=150, header = 1)
+x
+close(con)
+con <- file("hw1_data.csv")
+x <- read.csv(con , skip=150, header = TRUE)
+x
+x <- read.csv(con ,  header = TRUE)
+close(con )
+con <- file("hw1_data.csv")
+x <- read.csv(con ,  header = TRUE)
+x
+x <- read.csv(con ,  header = TRUE, nrows=2)
+con <- file("hw1_data.csv")
+x <- read.csv(con ,  header = TRUE, nrows=2)
+x
+x <- read.csv(con ,  header = TRUE, skip=151)
+close(con )
+con <- file("hw1_data.csv")
+x <- read.csv(con ,  header = TRUE, skip=151)
+x
+close(con )
+con <- file("hw1_data.csv")
+x <- read.csv(con ,  header = TRUE, skip=151, as.is = T)
+x
+close(con )
+con <- file("hw1_data.csv")
+x <- read.csv(con , skip=151, header = TRUE,  as.is = T)
+x
+close(con )
+con <- file("hw1_data.csv")
+data <- read.csv(con)
+df <- data.frame(data)
+x <- tail(df,n=2)
+x
+y ,_ headd(df , n=2)
+y <_ headd(df , n=2)
+y <- headd(df , n=2)
+y <- head(df , n=2)
+y
+nrow(df)
+df[47,1]
+z <- df[1:153,]
+x <- is.na(z)
+x
+z <- df[1:153,1]
+z
+x <- is.na(z)
+x <- sum(is.na(z))
+x
+x <- is.na(z)
+x
+h <- z[!x]
+mean(z, trim = 0, na.rm = T)
+h <- subset(df, Ozone>31 & Temp>90))
+h <- subset(df, Ozone>31 & Temp>90)
+nrow(h)
+mean(h$Solar.R)
+subset(df, Month=6)
+h <- subset(df, Month=6)
+h <- subset(df, Month==6)
+mean(h$Temp)
+h <- subset(df, Month==5)
+max(h$Temp)
+max(h$Ozone)
+max(h$Ozone na.rm=T)
+max(h$Ozone, na.rm=T)
+savehistory("D:/DS/Project/myRrepository/responses.txt")
