@@ -1,5 +1,3 @@
-rankall("heart attack", 20)
-View(resultVec)
 rankall <- function( outcome, num = "best") {
 ## Read outcome data
 measures <- read.csv("D:/DS/Project/outcome-of-care-measures.csv", colClasses = "character")
@@ -21,11 +19,12 @@ bestH <- measures[,c(2,7,23)]
 bestH[,3] <- as.numeric(bestH[,3])
 dfH <- data.frame(bestH)
 ## For each state, find the hospital of the given rank
+numin <- num
 resultindex <- 1
 for(state in statesU){
 bestH <- subset(dfH,State==state)
 bestH <- bestH[order(bestH[,3],decreasing=FALSE,na.last = NA),]
-if(num=="best"){
+if(num=="best" || is.null(num)){
 num <- 1
 }
 else if(num=="worst"){
@@ -37,7 +36,7 @@ resultVec <- c(state,NA)
 }else{
 resultVec <- rbind(resultVec,c(state,NA))
 }
-}
+}else{
 resultDf <- data.frame(bestH)
 colnames(resultDf) <- c('Hospital.Name','State','Outcome')
 stateVec <- subset(resultDf,Outcome==bestH[num,3])
@@ -47,11 +46,12 @@ resultVec <- c(state,stateVec[1])
 }else{
 resultVec <- rbind(resultVec,c(state,stateVec[1]))
 }
+}
 resultindex <- resultindex+1
+num <- numin
 }
 ## Return a data frame with the hospital names and the
 ## (abbreviated) state name
 colnames(resultVec) <- c('state','hospital')
 resultVec
 }
-head(rankall("heart attack", 20), 10)
