@@ -1,0 +1,5 @@
+x <- read.csv("D:/DS/Project/gettingdata/ss06hid.csv",header=T)
+df <- data.frame(x)
+agricultureLogical <- df$ACR==3 & df$AGS==6
+which(agricultureLogical)
+#125  238  262 

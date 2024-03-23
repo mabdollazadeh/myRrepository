@@ -1,0 +1,1 @@
+sqldf("select distinct pwgtp1 from acs")

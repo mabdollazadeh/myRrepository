@@ -1,0 +1,30 @@
+
+install.packages("httr")
+library(httr)
+#install.packages("jsonlite")
+library(jsonlite)
+
+
+
+myapp <- oauth_app("my_r_api_test",
+  key = "a0fe01a91d7b50483bd2",
+  secret = "94f2fd1f4b3cd794c7093ab53773377cd492db87"
+)
+
+github_token <- oauth2.0_token(oauth_endpoints("github"), myapp)
+
+gtoken <- config(token = github_token)
+req <- GET("https://api.github.com/users/jtleek/repos", gtoken)
+stop_for_status(req)
+json1 <- content(req)
+
+gitDF <- jsonlite::fromJSON(jsonlite::toJSON(json1))
+
+# Subset data.frame
+
+colnames(gitDF)
+gitDF[,4]
+
+res <- subset(gitDF,full_name=="jtleek/datasharing")
+
+res[1,47]
