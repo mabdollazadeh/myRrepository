@@ -45,5 +45,21 @@ str(res)
 actlablesdf <- read.table("D:/DS/Project/gettingdata/UCI HAR Dataset/activity_labels.txt")
 res[,activitylable:=actlablesdf[activitylable,2]]
 #descriptive label dataset
-
+dim(features)
+selectcolnames <- features[,featureName]
+selectcolnames <- sub("-","",selectcolnames)
+selectcolnames <- sub("-","",selectcolnames)
+selectcolnames <- sub("\\(","",selectcolnames)
+selectcolnames <- sub("\\)","",selectcolnames)
+selectcolnames <- c("subjectid","activitylable",selectcolnames)
+str(selectcolnames)
+colnames(res) <- selectcolnames
+str(res)
+#average
+install.packages("dplyr")
+library(dplyr)
+newds <- res %>%
+group_by(subjectid,activitylable) %>%
+summarise_all( mean)
+dim(newds)
 
