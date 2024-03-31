@@ -1,0 +1,10 @@
+1- show comparison
+2- They are made for formal presentations
+3- Margins and spacings are adjusted automatically depending on the type of plot and the data
+4- A PNG file
+5- Postscript
+6-  Scatterplots with many many points
+7- points()
+8- quartz()
+9- the plotting symbol/character in the base graphics system
+10- Construct the plot on the screen device and then copy it to a PDF file with dev.copy2pdf()
