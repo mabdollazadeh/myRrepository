@@ -1,0 +1,6 @@
+h <- subset(NEIdf,NEIdf$type=="ON-ROAD")
+h <- subset(h, h$fips == "24510")
+result <- tapply(h$Emissions,as.factor(h$year),sum)
+png(file="D:/DS/Project/exdata/plot5.png", width=480, height=480)
+plot(names(result),result, xlab="Year",ylab="Total PM2.5",pch=20)
+dev.off()
