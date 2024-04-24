@@ -1,0 +1,77 @@
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
+
+
+## Loading and preprocessing the data
+
+```{r}
+acts <- read.csv("D:/DS/Project/activity.csv", colClasses = "character")
+acts$date <- as.Date(acts$date,"%Y-%m-%d")
+acts$steps <- as.numeric(acts$steps)
+actsnona <- na.omit(acts)
+result <- tapply(actsnona$steps,as.factor(actsnona$date),sum)
+dfres <- data.frame(result)
+```
+
+## What is mean total number of steps taken per day?
+
+```{r}
+hist(dfres$result)
+summary(dfres)
+```
+
+## What is the average daily activity pattern?
+
+```{r}
+actsnona$interval <- sprintf("%06d",as.numeric(actsnona$interval))
+datetime <- paste(actsnona$date,actsnona$interval)
+h <- strptime(datetime,format='%Y-%m-%d %H%M%S')
+actsnona$datetime <- h
+AverageStepsPerDay <- tapply(actsnona$steps,as.factor(actsnona$interval),mean)
+dfAvgSteps <- data.frame(AverageStepsPerDay )
+actsnona$interval <- as.numeric(actsnona$interval)
+fact <- as.factor(actsnona$interval)
+fact <- levels(fact)
+fact <- as.numeric(fact)
+plot(fact, dfAvgSteps$AverageStepsPerDay, type = "l", ylab="AvergaStepsPerDay",xlab="TimeIntervals")
+```
+## Which interval contains maximum average steps
+```{r}
+which.max(dfAvgSteps$AverageStepsPerDay)
+```
+
+## Imputing missing values
+# fill NAs
+```{r}
+h1 <- acts[,1]
+sum(is.na(h1))
+h <- is.na(h1)
+indx <- which(h)
+modh <- indx %% 288
+idx288 <- modh==0
+modh[idx288]=288
+test <- AverageStepsPerDay[modh ]
+h1[indx]=test
+sum(is.na(h1))
+newacts <- acts
+newacts$steps <- h1
+```
+# make histogram
+```{r}
+newacts$date <- as.Date(newacts$date,"%Y-%m-%d")
+newacts$steps <- as.numeric(newacts$steps)
+result <- tapply(newacts$steps,as.factor(newacts$date),sum)
+dfres <- data.frame(result)
+hist(dfres$result)
+```
+
+# summary
+```{r}
+summary(dfres)
+```
+
+## Are there differences in activity patterns between weekdays and weekends?
