@@ -75,3 +75,15 @@ summary(dfres)
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
+acts <- read.csv("D:/DS/Project/activity.csv", colClasses = "character")
+acts$date <- as.Date(acts$date,"%Y-%m-%d")
+acts$steps <- as.numeric(acts$steps)
+actsnona <- na.omit(acts)
+AverageStepsWeekdays <- tapply(actsnona$steps,as.factor(actsnona$interval),mean)
+actsnona$date <- as.POSIXlt(actsnona$date)
+actsnona$days <- weekdays(actsnona$date)
+h <- actsnona$days=="Sunday" | actsnona$days=="Saturday"
+WEidx <- which(h)
+actsnona$days[WEidx]="weekend"
+WDidx <- which(!h)
+actsnona$days[WDidx]="weekday"
