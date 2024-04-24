@@ -1,0 +1,10 @@
+1- I give my data to an independent investigator at another institution, she analyzes the data and gets the same results as I originally obtained.
+2- The investigator makes the analytic data publicly available.
+3-The study's analytic data and computer code for the data analysis are publicly available. When the code is run on the analytic data, the findings are identical to the published results.
+4- The original study was opportunistic in its timing and it would be difficult to find a similar context in which to repeat it.
+5- The statistical methods for most studies can be accurately described using plain language.?
+6- It transforms the measured data into analytic data.?
+7- Combine explanatory text and data analysis code in a single document.
+8- Transform the literate program into a human readable document.
+9- A programming language like R.
+10- knitr allows for the use of markdown instead of LaTeX.

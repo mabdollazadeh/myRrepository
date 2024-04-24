@@ -1,0 +1,5 @@
+1- John Gruber
+```{r}
+Set the 'fig.height' and 'fig.width' options for the code chunk
+Set the option results = "asis"
+Every time you knit() the R Markdown file, the HTML file will be overwritten
