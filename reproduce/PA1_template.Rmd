@@ -75,6 +75,7 @@ summary(dfres)
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
+```{r}
 acts <- read.csv("D:/DS/Project/activity.csv", colClasses = "character")
 acts$date <- as.Date(acts$date,"%Y-%m-%d")
 acts$steps <- as.numeric(acts$steps)
@@ -87,3 +88,25 @@ WEidx <- which(h)
 actsnona$days[WEidx]="weekend"
 WDidx <- which(!h)
 actsnona$days[WDidx]="weekday"
+wedf <- subset(actsnona,actsnona$days=="weekend")
+wddf <- subset(actsnona,actsnona$days=="weekday")
+AverageStepsWeekDay <- tapply(wddf$steps,as.factor(wddf$interval),mean)
+AverageStepsWeekend <- tapply(wedf$steps,as.factor(wedf$interval),mean)
+dfresult <- data.frame(AverageStepsWeekDay)
+dfwe <- data.frame(AverageStepsWeekend)
+colnames(dfresult) <- c("avgSteps")
+colnames(dfwe) <- c("avgSteps")
+dfresult <- rbind(dfresult,dfwe)
+daycol <- rep(c("weekday","weekend"),each=288)
+dfdays <- data.frame(daycol)
+dfresult <- cbind(dfresult,dfdays)
+fact <- as.factor(actsnona$interval)
+fact <- levels(fact)
+fact <- as.numeric(fact)
+dfinterval <- data.frame(fact)
+dfinterval <- rbind(dfinterval,dfinterval)
+dfresult <- cbind(dfresult,dfinterval)
+library(lattice)
+xyplot(dfresult$avgSteps~dfresult$fact|dfresult$daycol, data=dfresult ,pch=20)
+str(fact)
+```
