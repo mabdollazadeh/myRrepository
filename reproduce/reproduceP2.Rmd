@@ -1,0 +1,83 @@
+---
+title: "Storm Events Analysis of Data in US and its effects on health and economy"
+output: 
+  html_document:
+    keep_md: true
+---
+
+## synopsis
+  The dataset for this analysis comes from the U.S. NOAA storm database.  
+  First the most harmful events with respect to human health is identified.  
+  Second the events contributing to the greatest economic damages are listed. 
+
+## Data Processing
+# download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2","D:/DS/Project/StormData.csv.bz2")  
+
+```{r}
+
+stormdt <- read.table("D:/DS/Project/StormData.csv.bz2",sep=",",header=T)
+stormdt$INJURIES <- as.numeric(stormdt$INJURIES)
+stormdt$FATALITIES <- as.numeric(stormdt$FATALITIES)
+
+sum(is.na(stormdt$FATALITIES))
+sum(is.na(stormdt$INJURIES))
+idxh<- which(stormdt$PROPDMGEXP=="H")
+idxk<- which(stormdt$PROPDMGEXP=="K")
+idxm<- which(stormdt$PROPDMGEXP=="M")
+idxb<- which(stormdt$PROPDMGEXP=="B")
+stormdt[idxh,]$PROPDMG <- stormdt[idxh,]$PROPDMG*100
+stormdt[idxk,]$PROPDMG <- stormdt[idxk,]$PROPDMG*10^3
+stormdt[idxm,]$PROPDMG <- stormdt[idxm,]$PROPDMG*10^6
+stormdt[idxb,]$PROPDMG <- stormdt[idxb,]$PROPDMG*10^9
+
+idxh<- which(stormdt$CROPDMGEXP=="H")
+idxk<- which(stormdt$CROPDMGEXP=="K")
+idxm<- which(stormdt$CROPDMGEXP=="M")
+idxb<- which(stormdt$CROPDMGEXP=="B")
+stormdt[idxh,]$CROPDMG <- stormdt[idxh,]$CROPDMG*100
+stormdt[idxk,]$CROPDMG <- stormdt[idxk,]$CROPDMG*(10^3)
+stormdt[idxm,]$CROPDMG <- stormdt[idxm,]$CROPDMG*(10^6)
+stormdt[idxb,]$CROPDMG <- stormdt[idxb,]$CROPDMG*(10^9)
+
+
+```
+## Result
+```{r}
+result <- tapply(stormdt$FATALITIES,as.factor(stormdt$EVTYPE),sum)
+resultin <- tapply(stormdt$INJURIES,as.factor(stormdt$EVTYPE),sum)
+result <- result[order(result,decreasing=TRUE)]
+resultin <- resultin[order(resultin,decreasing=TRUE)]
+result <- result[1:10]
+resultin <- resultin[1:10]
+par(mar = c(7, 4, 2, 2) + 0.2) #add room for the rotated labels
+end_point = 0.5 + nrow(result) + nrow(result) - 1
+barplot(result,names.arg=names(result),xlab="Evant Type",ylab="Human Fatality",xaxt = "n", space = 1)
+text(seq(1.5, end_point, by = 2), par("usr")[3]-0.25,
+srt = 60, adj = 1, xpd = TRUE,
+labels = paste(rownames(result)), cex = 0.65)
+
+barplot(resultin,names.arg=names(resultin),xlab="Evant Type",ylab="Human Injury",xaxt = "n", space = 1)
+text(seq(1.5, end_point, by = 2), par("usr")[3]-0.25,
+srt = 60, adj = 1, xpd = TRUE,
+labels = paste(rownames(resultin)), cex = 0.65)
+
+
+
+PROPDMG <- tapply(stormdt$PROPDMG,as.factor(stormdt$EVTYPE),sum)
+CROPDMG <- tapply(stormdt$CROPDMG,as.factor(stormdt$EVTYPE),sum)
+PROPDMG <- PROPDMG[order(PROPDMG,decreasing=TRUE)]
+CROPDMG <- CROPDMG[order(CROPDMG,decreasing=TRUE)]
+PROPDMG <- PROPDMG[1:10]
+CROPDMG <- CROPDMG[1:10]
+barplot(PROPDMG,names.arg=names(PROPDMG),xlab="Evant Type",ylab="Property Damage",xaxt = "n", space = 1)
+text(seq(1.5, end_point, by = 2), par("usr")[3]-0.25,
+srt = 60, adj = 1, xpd = TRUE,
+labels = paste(rownames(PROPDMG)), cex = 0.65)
+
+barplot(CROPDMG,names.arg=names(CROPDMG),xlab="Evant Type",ylab="Crop Damage",xaxt = "n", space = 1)
+text(seq(1.5, end_point, by = 2), par("usr")[3]-0.25,
+srt = 60, adj = 1, xpd = TRUE,
+labels = paste(rownames(CROPDMG)), cex = 0.65)
+
+
+```
