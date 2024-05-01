@@ -79,5 +79,14 @@ text(seq(1.5, end_point, by = 2), par("usr")[3]-0.25,
 srt = 60, adj = 1, xpd = TRUE,
 labels = paste(rownames(CROPDMG)), cex = 0.65)
 
+stormdt$wholeDMG <- stormdt$PROPDMG+stormdt$CROPDMG
+wholeDMG <- tapply(stormdt$wholeDMG,as.factor(stormdt$EVTYPE),sum)
+wholeDMG <- wholeDMG[order(wholeDMG,decreasing=TRUE)]
+wholeDMG <- wholeDMG[1:10]
+barplot(wholeDMG,names.arg=names(wholeDMG),xlab="Evant Type",ylab="Whole Economic Damage",xaxt = "n", space = 1)
+text(seq(1.5, end_point, by = 2), par("usr")[3]-0.25,
+srt = 60, adj = 1, xpd = TRUE,
+labels = paste(rownames(wholeDMG)), cex = 0.65)
+
 
 ```
