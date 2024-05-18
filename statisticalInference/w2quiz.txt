@@ -1,0 +1,8 @@
+1- sigma^2/n
+2- 16%
+3- 1223
+4- 1112
+5- 19%
+6- 68% ( 1 SD from the mean)
+7- 0.5 (iid for large number LLN theorem)
+8- ppois(10,lambda=3*5)=0.12
