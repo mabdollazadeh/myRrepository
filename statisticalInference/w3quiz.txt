@@ -1,0 +1,8 @@
+1- [1077-1123] 1100+- qt(0.975,8)*30/sqrt(9)
+2- 2.60  -2+ qt(0.975,8)*s/sqrt(9) =0
+3- A paired interval
+4- [-2.75,-1.25] independent group confidence interval 
+5- The interval will be narrower
+6- When subtracting (old - new) the interval is entirely above zero. The new system appears to be effective [1.66,2.34]
+7-  [2.636, 5.364]  qt(0.95,16)
+
