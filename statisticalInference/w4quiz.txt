@@ -1,4 +1,6 @@
 1- 0.087   t.test(y,x,paired=TRUE)
 2- [1077 to 1123] X+-qt*s/sqrt(n)
 3- 0.31  pbinom(2,size=4,prob=0.5,lower.tail=FALSE)
- 
+4- 0.03 pbinom(10,size=1787,prob=0.01)
+5- less than 0.01   t=X1-X2/sqrt((S1^2/n1)+(S2^2/n2)) -> pt(t,n1+n2-2) ? calculate lowertail=T/F and get lower value and double it
+6- No you wouldn't reject
