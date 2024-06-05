@@ -4,3 +4,6 @@
 4- 0.03 pbinom(10,size=1787,prob=0.01)
 5- less than 0.01   t=X1-X2/sqrt((S1^2/n1)+(S2^2/n2)) -> pt(t,n1+n2-2) ? calculate lowertail=T/F and get lower value and double it
 6- No you wouldn't reject
+7-80   power.t.test(n=100,delta=0.01,sd=0.04,sig.level=0.05,alternative = "one.sided",type="one.sample")$power
+8-140    power.t.test(power=0.90,delta=0.01,sd=0.04,alternative="one.sided",type="one.sample")$n
+9-You will get larger power
