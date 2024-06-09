@@ -1,0 +1,43 @@
+---
+title: "statisticalInferenceProject"
+output: html_document
+date: "2024-06-08"
+---
+Illustrate via simulation and associated explanatory text the properties of the distribution of the mean of 40 exponentials.
+```{r}
+nosim <- 1000
+cfunc <- function(x,n) sqrt(n)* (mean(x)-5)/5
+
+my.matrix <- NULL
+for (i in 1 : nosim ) my.matrix = rbind(my.matrix, rexp(40,rate=0.2))
+res <- apply(my.matrix,1,cfunc,40)
+hist(res)
+mean(res)
+sd(res)
+
+```
+Part2 ToothGrowth dataset
+Confidence Interval
+
+```{r}
+library(data.table)
+data("ToothGrowth")
+tooth_growth <- data.table(ToothGrowth)
+str(tooth_growth)
+summary(tooth_growth)
+dataOJ <- subset(tooth_growth,tooth_growth$supp=="OJ")
+dataVC <- subset(tooth_growth,tooth_growth$supp=="VC")
+sd1 <- sd(dataVC$len)
+sd2 <- sd(dataOJ$len)
+df <- ((sd1^2+sd2^2)/30)^2/(((sd1^2/30)^2+(sd2^2/30)^2)/29)
+mu1 <- mean(dataVC$len)
+mu2 <- mean(dataOJ$len)
+upper <- mu2-mu1+qt(0.975,55)*(sqrt((sd1^2+sd2^2)/30))
+lowert <- mu2-mu1-qt(0.975,55)*(sqrt((sd1^2+sd2^2)/30))
+```
+
+t test
+```{r}
+t.test(dataOJ$len,dataVC$len,paired=FALSE,var.equal = FALSE)
+
+```
