@@ -1,0 +1,5 @@
+1- 0.0025 -> mean(x)
+2- -1.713 cor(y,x)*sd(y)/sd(x) or lm(I(y-mean(y))~I(x-mean(x))-1)
+3- -5.344 coef(lm(mtcars$mpg~mtcars$wt))
+4- 1 cor(y,x)*sd(y)/sd(x)=.5*2
+5- 0.6 y=Beta*x , Beta=cor(y,x)=.4 , x=1.5
