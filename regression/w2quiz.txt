@@ -1,0 +1,7 @@
+1-
+2-
+3- -6.486
+	y <- mtcars$mpg; x <- mtcars$wt; n <- length(y)
+	sumCoef <- summary(lm(y~x))$coefficients
+	sumCoef[2,1] + c(-1, 1) * qt(.975, df = lm(y~x)$df) * sumCoef[2, 2]
+4- The estimated expected change in mpg per 1,000 lb increase in weight.
