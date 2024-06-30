@@ -4,5 +4,5 @@
 4- [-2.75,-1.25] independent group confidence interval 
 5- The interval will be narrower
 6- When subtracting (old - new) the interval is entirely above zero. The new system appears to be effective [1.66,2.34]
-7-  [2.636, 5.364]  qt(0.95,16)
+7-  [2.636, 5.364]  qt(0.95,16) REDO!
 
