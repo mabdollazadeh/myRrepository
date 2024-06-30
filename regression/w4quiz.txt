@@ -1,0 +1,6 @@
+1- 0.969 logautolander <- glm(shuttle$use ~ shuttle$wind,family="binomial"); exp(logautolander$coefficients)
+2- 0.969 logautolander <- glm(shuttle$use ~ shuttle$wind+shuttle$magn,family="binomial") ; exp(logautolander$coefficients)
+3- The coefficients get inverted (one over their previous value).
+4- 0.9457 sprA <- subset(InsectSprays,InsectSprays[,2]=='A'); sprB <- subset(InsectSprays,InsectSprays[,2]=='B'); sum(sprA$count)/sum(sprB$count)
+5- The coefficient estimate is unchanged
+6- 2.037
