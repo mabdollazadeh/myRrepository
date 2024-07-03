@@ -1,25 +1,35 @@
 ---
 title: "RegressionModelsProject"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 date: "2024-07-01"
 ---
-## mtcars dataset
+## Executive Summary
+in this analysis we try to answer the following questions in mtcars data set:  
+-Is an automatic or manual transmission better for MPG?    
+
+-Quantify the MPG difference between automatic and manual transmissions  
+I used model selection skills to fit the best model and also used diagnostics tools to analyse my results.  
+
+## Explotory Data Analysis of mtcars dataset
 A data frame with 32 observations on 11 (numeric) variables
-[, 1]	mpg	Miles/(US) gallon
-[, 2]	cyl	Number of cylinders
-[, 3]	disp	Displacement (cu.in.)
-[, 4]	hp	Gross horsepower
-[, 5]	drat	Rear axle ratio
-[, 6]	wt	Weight (1000 lbs)
-[, 7]	qsec	1/4 mile time
-[, 8]	vs	Engine (0 = V-shaped, 1 = straight)
-[, 9]	am	Transmission (0 = automatic, 1 = manual)
-[,10]	gear	Number of forward gears
-[,11]	carb	Number of carburetors
+[, 1]	mpg	Miles/(US) gallon  
+[, 2]	cyl	Number of cylinders  
+[, 3]	disp	Displacement (cu.in.)  
+[, 4]	hp	Gross horsepower  
+[, 5]	drat	Rear axle ratio  
+[, 6]	wt	Weight (1000 lbs)  
+[, 7]	qsec	1/4 mile time  
+[, 8]	vs	Engine (0 = V-shaped, 1 = straight)  
+[, 9]	am	Transmission (0 = automatic, 1 = manual)  
+[,10]	gear	Number of forward gears  
+[,11]	carb	Number of carburetors  
 
 ```{r}
  carsdf <- data.frame(mtcars)
 head(carsdf)
+summary(carsdf)
 y<-carsdf$mpg
 x<-carsdf$am
 idx<-x==0
@@ -30,7 +40,7 @@ points(x[!idx], y[!idx], pch = 21, col = "black", bg = "salmon", cex = 2)
 
 ```
 ## model selection
-comparing variance inflation factor for all variables, we can see that number of cylinders, displacement and weight which have higher standard deviations are highly related to each other. following a anova test shows that including weight and cylinder is necessary.
+comparing variance inflation factor for all variables, we can see that number of cylinders, displacement and weight which have higher standard deviations are highly related to each other. following a anova test shows that including weight and cylinder is necessary.  
 ```{r}
 #install.packages("car")
 library(car)
@@ -44,7 +54,7 @@ anova(fitbase,fitcylwt)
 
 ```
 ## Linear Regression 
-the linear regression shows that changing transmission type from automatic to manual (including wt and cyl) increases 0.15 miles per gallon.
+the linear regression shows that changing transmission type from automatic to manual (including wt and cyl) increases 0.15 miles per gallon.  
 ```{r}
 
 summary(fitcylwt)$coef
@@ -52,20 +62,20 @@ summary(fitcylwt)$coef
 ```
 
 ##plot residuals
-no specific pattern is shown
+no specific pattern is shown  
 ```{r}
 plot(predict(fitcylwt),resid(fitcylwt),pch=19)
 abline(h=0)
 
 ```
 
-## dianostics and homoscedasticity
+## diagnostics and homoscedasticity
 no data entry errors has seen based on  hatvalues function.
-there is not specific outlier according to the dffits function.
-the plot also shows the model fits the assumptions of homoscedasticity.
--seeing a bias in the residuals would  indicate a bias in the error
--red lines representing the mean of the residuals are all basically horizontal and centered around zero so no outliers or bias
--QQ one-to-one line
+there is not specific outlier according to the dffits function.  
+the plot also shows the model fits the assumptions of homoscedasticity.  
+-seeing a bias in the residuals would  indicate a bias in the error  
+-red lines representing the mean of the residuals are all basically horizontal and centered around zero so no outliers or bias  
+-QQ one-to-one line  
 
 ```{r}
 hatvalues(fitcylwt)
@@ -76,7 +86,7 @@ plot(fitcylwt)
 ```
 
 ## visualise the result
-in this diagram I try to visualize the fitted line and its relation to cars weight and transmission type. as we can see manual type(1) contributes to higher mpg and it is also obvious that as weight increases the outcome decreases.
+in this diagram I try to visualize the fitted line and its relation to cars weight and transmission type. as we can see manual type(1) contributes to higher mpg and it is also obvious that as weight increases the outcome decreases.  
 ```{r}
 library(ggplot2)
 coeffit<-summary(fitcylwt)$coef[,1]
@@ -84,7 +94,6 @@ g = ggplot(carsdf, aes(x = wt, y = mpg, colour = factor(am)))
 g = g + geom_point(size = 6, colour = "black") + geom_point(size = 4)
 g = g + xlab("Weight") + ylab("MPG")
 g1=g
-g1
 coeffit
 g1=g1+geom_abline(intercept=coeffit[1],slope=coeffit[5],linewidth=2)
 g1
@@ -92,4 +101,4 @@ g1
 ```
 
 ## conclusion
-for conclusion we cay tell that also there is a positive relationship between type of transmission and mpg, in other words type manual produces higher miles per gallon, the other variables such as weight and cylinders have negative effect and decrease this slope. and it is also noticable that cars with higher weight in this data set appears to have automatic transmission mainly.
+for conclusion we cay tell that although there is a positive relationship between type of transmission and mpg, in other words type manual produces higher miles per gallon, the other variables such as weight and cylinders have negative effect and decrease this slope. and it is also notable that cars with higher weight in this data set appears to have automatic transmission mainly.
