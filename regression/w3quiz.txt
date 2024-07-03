@@ -1,0 +1,9 @@
+1- -6.071    mtcarsdf$cyl <- as.factor(mtcarsdf$cyl); summary(lm(mpg~cyl+wt,data=mtcarsdf))$coefficients
+2- Holding weight constant, cylinder appears to have less of an impact on mpg than if weight is disregarded.
+3- X  The P-value is larger than 0.05. So, according to our criterion, we would fail to reject, which suggests that the interaction terms is necessaryfitrest <- lm(mpg~factor(cyl)*wt,data=mtcars)
+ fitbase <- lm(mpg~factor(cyl)+wt,data=mtcars)
+lrtest(fitbase,fitrest)
+4- The estimated expected change in MPG per one ton increase in weight for a specific number of cylinders (4, 6, 8).
+5- 0.9946 hatvalues(fit)[5]
+6- -134 dfbetas(fit)[5]
+7- It is possible for the coefficient to reverse sign after adjustment. For example, it can be strongly significant and positive before adjustment and strongly significant and negative after adjustment.
