@@ -29,26 +29,67 @@ points(x[idx], y[idx], pch = 21, col = "black", bg = "lightblue", cex = 2)
 points(x[!idx], y[!idx], pch = 21, col = "black", bg = "salmon", cex = 2)
 
 ```
+## model selection
+comparing variance inflation factor for all variables, we can see that number of cylinders, displacement and weight which have higher standard deviations are highly related to each other. following a anova test shows that including weight and cylinder is necessary.
+```{r}
+#install.packages("car")
+library(car)
+fit <- lm(y ~ .,data=carsdf)
+sqrt(vif(fit))
+fitbase<- lm(y~factor(x))
 
+fitcylwt<-lm(y~factor(x)+factor(carsdf$cyl)+carsdf$wt)
+
+anova(fitbase,fitcylwt)
+
+```
 ## Linear Regression 
-the linear regression shows that changing transmission type from automatic to manual increases 7.24 miles per gallon.
+the linear regression shows that changing transmission type from automatic to manual (including wt and cyl) increases 0.15 miles per gallon.
 ```{r}
-lmmpgtr <- lm(y~factor(x))
-summary(lmmpgtr)$coef
+
+summary(fitcylwt)$coef
 
 ```
- ## Linear Regression with weight as possible confounder
- 
+
+##plot residuals
+no specific pattern is shown
 ```{r}
-fit2<-lm(y~factor(x)+carsdf$wt)
-summary(fit2)$coef
+plot(predict(fitcylwt),resid(fitcylwt),pch=19)
+abline(h=0)
 
 ```
-  ##  model comparison
-  as pvalue for the model comparison is less than 0.05 so it concludes that the second model (which is including weight) is better fit for our data.
+
+## dianostics and homoscedasticity
+no data entry errors has seen based on  hatvalues function.
+there is not specific outlier according to the dffits function.
+the plot also shows the model fits the assumptions of homoscedasticity.
+-seeing a bias in the residuals would  indicate a bias in the error
+-red lines representing the mean of the residuals are all basically horizontal and centered around zero so no outliers or bias
+-QQ one-to-one line
+
 ```{r}
-fit2<-lm(y~factor(x)+carsdf$wt)
-anova(lmmpgtr,fit2)
+hatvalues(fitcylwt)
+dffits(fitcylwt)
+par(mfrow=c(2,2))
+plot(fitcylwt)
 
 ```
- 
+
+## visualise the result
+in this diagram I try to visualize the fitted line and its relation to cars weight and transmission type. as we can see manual type(1) contributes to higher mpg and it is also obvious that as weight increases the outcome decreases.
+```{r}
+library(ggplot2)
+coeffit<-summary(fitcylwt)$coef[,1]
+g = ggplot(carsdf, aes(x = wt, y = mpg, colour = factor(am)))
+g = g + geom_point(size = 6, colour = "black") + geom_point(size = 4)
+g = g + xlab("Weight") + ylab("MPG")
+g1=g
+g1
+coeffit
+g1=g1+geom_abline(intercept=coeffit[1],slope=coeffit[5],linewidth=2)
+g1
+
+```
+
+## conclusion
+for conclusion we cay tell that also there is a positive relationship between type of transmission and mpg, in other words type manual produces higher miles per gallon, the other variables such as weight and cylinders have negative effect and decrease this slope. and it is also noticable that cars with higher weight in this data set appears to have automatic transmission mainly.
